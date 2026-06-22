@@ -28,23 +28,27 @@ Used to execute administrative and information-gathering commands.
 
 ```powershell
 whoami
+hostname
 Get-Location
 Get-Process
+ipconfig
 ```
 
 ---
 
 ## What I Observed
 
-PowerShell provides direct access to system information and administrative functions.
+PowerShell successfully executed a series of system discovery commands commonly used by administrators and security analysts.
 
-Commands executed successfully and returned information about:
+The commands revealed:
 
-* The current user.
+* The currently logged-in user account.
+* The hostname of the workstation.
 * The current working directory.
 * Running processes on the system.
+* Network configuration information.
 
-PowerShell output is displayed directly within the terminal and can be used to automate administrative and investigative tasks.
+The commands executed without errors and returned information directly from the local Windows system.
 
 ---
 
@@ -58,36 +62,128 @@ Store screenshots in:
 screenshots/lab-03-suspicious-powershell-activity/
 ```
 
-Suggested files:
+Files:
 
 ```text
 powershell_user_context.png
-powershell_process_review.png
+powershell_network_review.png
 ```
 
 ---
 
 ## Investigation Findings
 
-### User Context
+### User Enumeration
 
-The PowerShell session identified the currently logged-in user account.
+Command:
 
-### Working Directory
+```powershell
+whoami
+```
 
-The current execution location was identified using PowerShell.
+Result:
 
-### Process Review
+```text
+angie_pc\angel
+```
 
-Running processes were reviewed using PowerShell commands.
+This identified the currently logged-in user account.
+
+### Host Discovery
+
+Command:
+
+```powershell
+hostname
+```
+
+Result:
+
+```text
+Angie_PC
+```
+
+This identified the system hostname.
+
+### Working Directory Review
+
+Command:
+
+```powershell
+Get-Location
+```
+
+Result:
+
+```text
+C:\Users\angel
+```
+
+This identified the current PowerShell execution location.
+
+### Process Enumeration
+
+Command:
+
+```powershell
+Get-Process
+```
+
+This returned a list of running processes, including:
+
+```text
+AdobeCollabSync
+ApplicationFrameHost
+backgroundTaskHost
+Canva
+```
+
+Process enumeration is commonly used by administrators and analysts to understand what applications and services are running on a system.
+
+### Network Configuration Review
+
+Command:
+
+```powershell
+ipconfig
+```
+
+Key observations:
+
+```text
+IPv4 Address: 10.111.28.28
+Subnet Mask: 255.255.192.0
+Default Gateway: 10.111.0.1
+DNS Suffix: p.fiu.edu
+```
+
+This command provided information about the workstation's network configuration and connectivity.
 
 ### Security Analysis
 
-The commands executed during this lab are commonly observed during legitimate administrative activity. However, similar commands are also frequently used by attackers during system discovery and reconnaissance phases.
+The sequence of commands executed during this lab resembles system discovery activity frequently observed during the early stages of security investigations.
+
+Commands such as:
+
+```powershell
+whoami
+hostname
+Get-Location
+Get-Process
+ipconfig
+```
+
+are commonly used by:
+
+* System Administrators
+* Security Analysts
+* Incident Responders
+
+However, similar commands may also be used by attackers to gather information about a system after gaining access.
 
 ### Conclusion
 
-PowerShell activity was reviewed in a controlled lab environment. The commands executed gathered local system information and demonstrated how administrative actions can generate activity that may later be reviewed during security investigations.
+PowerShell was used to gather user, host, process, and network information from the local system. The activity demonstrated how legitimate administrative commands can closely resemble reconnaissance techniques reviewed during cybersecurity investigations. No malicious activity was identified, and all commands were executed during a controlled lab exercise.
 
 ---
 
